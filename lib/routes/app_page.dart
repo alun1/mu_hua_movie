@@ -17,7 +17,7 @@ class AppPages {
 
     GetPage(
         name: Routes.player,
-        page: () =>  const PlayerScreen(),
+        page: () =>   PlayerScreen(),
         binding: BindingsBuilder.put(() => PlayerCon())),
 
 

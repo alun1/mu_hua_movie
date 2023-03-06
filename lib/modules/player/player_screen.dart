@@ -1,12 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
+
+import 'package:extended_betterplayer/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/modules/player/player_con.dart';
 
 class PlayerScreen extends GetView<PlayerCon> {
-  const PlayerScreen({super.key});
+  final GlobalKey<BetterPlayerPlaylistState> _betterPlayerPlaylistStateKey =
+      GlobalKey();
+
+  BetterPlayerPlaylistController? get _betterPlayerPlaylistController =>
+      _betterPlayerPlaylistStateKey
+          .currentState?.betterPlayerPlaylistController;
+
+  PlayerScreen({super.key}) {
+    WidgetsBinding.instance.addPersistentFrameCallback((Duration timeStamp) {
+      _betterPlayerPlaylistController?.betterPlayerController
+          ?.addEventsListener((event) {
+        print("Better player event: ${event.betterPlayerEventType}");
+        if (event.betterPlayerEventType ==
+            BetterPlayerEventType.setupDataSource) {
+          controller.currentDataSourceIndex.value =
+              _betterPlayerPlaylistController?.currentDataSourceIndex ?? 0;
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +44,20 @@ class PlayerScreen extends GetView<PlayerCon> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Obx(
-              () => Center(
-                child: controller.isPlayerInit.value
-                    ? AspectRatio(
-                        aspectRatio:
-                            controller.playerController?.value.aspectRatio ??
-                                0.8,
-                        child: Chewie(
-                          controller: controller.chewieController!,
-                        ))
-                    : CachedNetworkImage(
-                        width: Get.width,
-                        height: 210,
-                        fit: BoxFit.cover,
-                        imageUrl: controller.arguments.vodPic),
-              ),
+              () => BetterPlayerPlaylist(
+                  key: _betterPlayerPlaylistStateKey,
+                  betterPlayerConfiguration: BetterPlayerConfiguration(
+                      autoPlay: true,
+                      looping: true,
+                      placeholder: CachedNetworkImage(
+                          width: Get.width,
+                          height: 210,
+                          fit: BoxFit.cover,
+                          imageUrl: controller.arguments.vodPic)),
+                  betterPlayerPlaylistConfiguration:
+                      const BetterPlayerPlaylistConfiguration(),
+                  betterPlayerDataSourceList: controller.vodPlayUrlEntityList[
+                      controller.currentPlayFromIndex.value]),
             ),
             InkWell(
               onTap: () {
@@ -73,10 +92,12 @@ class PlayerScreen extends GetView<PlayerCon> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Row(
                   children: [
-                    Text(
-                      controller.arguments.vodName,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600),
+                    Obx(
+                      () => Text(
+                        "${controller.arguments.vodName} ${controller.vodPlayUrlEntityList[controller.currentPlayFromIndex.value][controller.currentDataSourceIndex.value].name}",
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
                     ),
                     const Spacer(),
                     const Text(
@@ -108,8 +129,11 @@ class PlayerScreen extends GetView<PlayerCon> {
                             groupValue: controller.currentPlayFromIndex.value,
                             onChanged: (int? value) {
                               controller.currentPlayFromIndex.value = value!;
+
+                              _betterPlayerPlaylistController
+                                  ?.setupDataSourceList(
+                                      controller.vodPlayUrlEntityList[value]);
                             },
-                            //controller.currentPlayFromIndex.value
                           )),
                       Text(controller.vodPlayFromList[index],
                           style: const TextStyle(fontSize: 14))
@@ -119,24 +143,31 @@ class PlayerScreen extends GetView<PlayerCon> {
             const Divider(),
             Flexible(
                 fit: FlexFit.tight,
-                child: Obx(() => GridView.count(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 3,
-                      children: controller.vodPlayUrlEntityList[
-                              controller.currentPlayFromIndex.value]
-                          .map((e) => ElevatedButton(
-                              onPressed: () {
-                                controller.currentPayUrl = e;
-                                controller.initPlayController();
-                              },
-                              child: Text(e.name)))
-                          .toList(),
-                    )))
+                child: Obx(() {
+                  var currentList = controller.vodPlayUrlEntityList[
+                      controller.currentPlayFromIndex.value];
+                  return GridView.count(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 3,
+                    children: currentList.map((e) {
+                      var index = currentList.indexOf(e);
+                      return ElevatedButton(
+                          onPressed:
+                              index == controller.currentDataSourceIndex.value
+                                  ? null
+                                  : () {
+                                      _betterPlayerPlaylistController
+                                          ?.setupDataSource(index);
+                                    },
+                          child: Text(e.name));
+                    }).toList(),
+                  );
+                }))
           ],
         ),
       ),

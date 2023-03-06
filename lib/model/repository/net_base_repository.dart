@@ -7,7 +7,8 @@ class NetBaseRepository extends GetConnect {
 
     httpClient.defaultContentType = "application/json";
 
-    httpClient.baseUrl = "https://api.tiankongapi.com/";
+    https://api.tiankongapi.com/api.php/provide/vod/
+    httpClient.baseUrl = "https://api.apilyzy.com/api.php/provide/vod/";
 
     // 请求拦截
     httpClient.addRequestModifier<void>((request) {

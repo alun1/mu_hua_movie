@@ -20,7 +20,7 @@ class NetRepository extends NetBaseRepository {
       map['wd'] = keyword;
     }
     Response<ResponseBaseEntity> response =
-        await get<ResponseBaseEntity>('api.php/provide/vod/', query: map,
+        await get<ResponseBaseEntity>('', query: map,
             decoder: (map) {
 
       return ResponseBaseEntity.fromJson( jsonDecode(map));
