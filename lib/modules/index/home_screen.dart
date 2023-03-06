@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import '../../routes/app_routes.dart';
 import '../../utils/EsoImageCacheManager.dart';
-import 'controller/home_con.dart';
+import 'home_con.dart';
 
 class HomeScreen extends GetView<HomeCon> {
   HomeScreen({super.key});
@@ -97,22 +98,27 @@ class HomeScreen extends GetView<HomeCon> {
                     }
                     var element = controller.vodInfo[index];
 
-                    return Column(
-                      children: [
-                        CachedNetworkImage(
-                          imageUrl: element.vodPic,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) =>
-                                  CircularProgressIndicator(
-                                      value: downloadProgress.progress),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                          fit: BoxFit.cover,
-                          cacheManager: EsoImageCacheManager(),
-                        ),
-                        Text(element.vodName,
-                            maxLines: 3, overflow: TextOverflow.ellipsis)
-                      ],
+                    return InkWell(
+                      child: Column(
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: element.vodPic,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) =>
+                                    CircularProgressIndicator(
+                                        value: downloadProgress.progress),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            fit: BoxFit.cover,
+                            cacheManager: EsoImageCacheManager(),
+                          ),
+                          Text(element.vodName,
+                              maxLines: 3, overflow: TextOverflow.ellipsis)
+                        ],
+                      ),
+                      onTap: () {
+                        Get.toNamed(Routes.player, arguments: element);
+                      },
                     );
                   },
                 )),

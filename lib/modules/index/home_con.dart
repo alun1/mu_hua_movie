@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/model/repository/net_repository.dart';
 
-import '../../../model/entity/vod_info_entity.dart';
+import '../../model/entity/vod_info_entity.dart';
 
 
 
