@@ -3,7 +3,9 @@ import 'package:mu_hua_movie/modules/index/home_con.dart';
 import 'package:mu_hua_movie/modules/index/home_screen.dart';
 import 'package:mu_hua_movie/modules/player/player_con.dart';
 import 'package:mu_hua_movie/modules/player/player_screen.dart';
+import 'package:mu_hua_movie/modules/source/source_mange_con.dart';
 
+import '../modules/source/source_mange_screen.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -12,15 +14,15 @@ class AppPages {
   static final List<GetPage> uPages = [
     GetPage(
         name: Routes.home,
-        page: () =>  HomeScreen(),
+        page: () => HomeScreen(),
         binding: BindingsBuilder.put(() => HomeCon())),
-
     GetPage(
         name: Routes.player,
-        page: () =>   PlayerScreen(),
+        page: () => PlayerScreen(),
         binding: BindingsBuilder.put(() => PlayerCon())),
-
-
-
+    GetPage(
+        name: Routes.source,
+        page: () => const SourceMangeScreen(),
+        binding: BindingsBuilder.put(() => SourceMangeCon())),
   ];
 }

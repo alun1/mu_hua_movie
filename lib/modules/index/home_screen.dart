@@ -75,7 +75,26 @@ class HomeScreen extends GetView<HomeCon> {
         ),
         drawer: Drawer(
           child: Column(
-            children: const [DrawerHeader(child: Text("SSSS"))],
+            children: [
+              const DrawerHeader(child: Text("SSSS")),
+              ListTile(
+                  title: const Text("源管理"),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 15,
+                  ),
+                  onTap: () {
+                    Get.toNamed(Routes.source);
+                  }),
+              const Divider(),
+              ListTile(
+                  title: const Text("订阅"),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 15,
+                  ),
+                  onTap: () {})
+            ],
           ),
         ),
         body: RefreshIndicator(
@@ -104,9 +123,12 @@ class HomeScreen extends GetView<HomeCon> {
                           CachedNetworkImage(
                             imageUrl: element.vodPic,
                             progressIndicatorBuilder:
-                                (context, url, downloadProgress) =>
-                                    CircularProgressIndicator(
-                                        value: downloadProgress.progress),
+                                (context, url, downloadProgress) => SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(
+                                  value: downloadProgress.progress),
+                            ),
                             errorWidget: (context, url, error) =>
                                 const Icon(Icons.error),
                             fit: BoxFit.cover,
