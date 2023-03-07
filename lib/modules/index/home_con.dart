@@ -12,11 +12,13 @@ class HomeCon extends GetxController {
   var keyword = "".obs;
   var isShowSearch = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    getIndex();
-  }
+ @override
+  onReady(){
+   Future.delayed(const Duration(seconds: 1)).then((value) {
+     getIndex();
+   });
+
+ }
 
   getIndex() async {
     try {

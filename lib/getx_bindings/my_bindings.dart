@@ -7,6 +7,8 @@ class MyBinding implements Bindings {
   @override
   Future<void> dependencies() async {
     Get.put(NetRepository(), permanent: true);
-    Get.put(await Hive.openBox('all'), permanent: true,tag: "allBox");
+
+    var allBox = await Hive.openBox('allBox');
+    Get.put(allBox, permanent: true, tag: "allBox");
   }
 }

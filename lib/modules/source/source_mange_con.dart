@@ -29,11 +29,30 @@ class SourceMangeCon extends GetxController {
     //   Get.snackbar("提示", "标题重复了，换一个吧");
     //   return;
     // }
+    final addSourceEntity = SourceEntity(addName, addUrl, true);
+    sourceBox.put(addName, addSourceEntity).then((value) {
+      if (count.value == sourceBox.length) {
+        count.refresh();
+      } else {
+        count.value = sourceBox.length;
+      }
+    });
 
-    sourceBox
-        .put(addName, SourceEntity(addName, addUrl, true))
-        .then((value) => count.value = sourceBox.length);
+    if (selectKey.value.isEmpty) {
+      selectKey.value = addName;
+      changeSelectSource(addSourceEntity);
+    }
     Get.back();
+  }
+
+  deleteSource(key) {
+    sourceBox.delete(key).then((value) {
+      if (count.value == sourceBox.length) {
+        count.refresh();
+      } else {
+        count.value = sourceBox.length;
+      }
+    });
   }
 
   @override
@@ -42,7 +61,8 @@ class SourceMangeCon extends GetxController {
     super.onClose();
   }
 
-  changeSelectSource(key) {
-    Get.find<Box>(tag: "allBox").put("selectSourceKey", key);
+  changeSelectSource(SourceEntity source) {
+    Get.find<Box>(tag: "allBox").put("selectSourceKey", source.name);
+    Get.find<Box>(tag: "allBox").put("selectSourceUrl", source.url);
   }
 }

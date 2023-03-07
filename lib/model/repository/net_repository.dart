@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import '../entity/response_base_entity.dart';
 import 'net_base_repository.dart';
 
 class NetRepository extends NetBaseRepository {
-
-
-  Future<ResponseBaseEntity?> getIndex(
-      int page, {String? category, String? keyword}) async {
+  Future<ResponseBaseEntity?> getIndex(int page,
+      {String? category, String? keyword}) async {
     var map = {
       'ac': "videolist",
       "pg": page.toString(),
@@ -19,11 +18,13 @@ class NetRepository extends NetBaseRepository {
     if (keyword != null && keyword.isNotEmpty) {
       map['wd'] = keyword;
     }
-    Response<ResponseBaseEntity> response =
-        await get<ResponseBaseEntity>('', query: map,
-            decoder: (map) {
 
-      return ResponseBaseEntity.fromJson( jsonDecode(map));
+    var selectSourceUrl =
+        Get.find<Box>(tag: "allBox").get("selectSourceUrl", defaultValue: "");
+    Response<ResponseBaseEntity> response =
+        await get<ResponseBaseEntity>(selectSourceUrl, query: map,
+            decoder: (map) {
+      return ResponseBaseEntity.fromJson(jsonDecode(map));
     });
     return response.body;
   }

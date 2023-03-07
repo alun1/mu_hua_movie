@@ -7,9 +7,7 @@ class NetBaseRepository extends GetConnect {
 
     httpClient.defaultContentType = "application/json";
 
-
-    httpClient.baseUrl = "https://api.tiankongapi.com/api.php/provide/vod/";
-    httpClient.timeout = const Duration(seconds:30);
+    httpClient.timeout = const Duration(seconds: 30);
     // 请求拦截
     httpClient.addRequestModifier<void>((request) {
       print(request);

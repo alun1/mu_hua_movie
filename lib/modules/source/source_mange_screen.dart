@@ -23,16 +23,49 @@ class SourceMangeScreen extends GetView<SourceMangeCon> {
                         children: [
                           Text(source?.name ?? ""),
                           const Spacer(),
-                          IconButton(
-                              onPressed: () {
-                                controller.addName = source?.name ?? "";
-                                controller.addUrl = source?.url ?? "";
-                                showEdit(context);
-                              },
-                              icon: const Icon(Icons.edit, size: 20)),
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.delete, size: 20))
+                          Visibility(
+                              visible: controller.selectKey.value !=
+                                  (source?.name ?? ""),
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        controller.addName = source?.name ?? "";
+                                        controller.addUrl = source?.url ?? "";
+                                        showEdit(context);
+                                      },
+                                      icon: const Icon(Icons.edit, size: 20)),
+                                  IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                  title: const Text("删除"),
+                                                  content: Text(
+                                                      "你将要删除 ${source?.name ?? ""} !"),
+                                                  actions: [
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Get.back();
+                                                        },
+                                                        child:
+                                                            const Text("取消")),
+                                                    ElevatedButton(
+                                                        onPressed: () {
+                                                          controller
+                                                              .deleteSource(
+                                                                  source?.name ??
+                                                                      "");
+                                                          Get.back();
+                                                        },
+                                                        child: const Text("确定"))
+                                                  ]);
+                                            });
+                                      },
+                                      icon: const Icon(Icons.delete, size: 20))
+                                ],
+                              ))
                         ],
                       ),
                       subtitle: Text(source?.url ?? ""),
@@ -40,7 +73,7 @@ class SourceMangeScreen extends GetView<SourceMangeCon> {
                       groupValue: controller.selectKey.value,
                       onChanged: (value) {
                         controller.selectKey.value = source?.name ?? "";
-                        controller.changeSelectSource(source?.name ?? "");
+                        controller.changeSelectSource(source!);
                       },
                     ));
               },
