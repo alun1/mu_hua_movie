@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:mu_hua_movie/routes/app_page.dart';
 import 'package:mu_hua_movie/routes/app_routes.dart';
 import 'getx_bindings/my_bindings.dart';
+import 'modules/source/source_entity.dart';
 
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(SourceEntityAdapter());
+
   runApp(const MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
