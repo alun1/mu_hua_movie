@@ -26,38 +26,7 @@ class HomeScreen extends GetView<HomeCon> {
           actions: [
             IconButton(
                 onPressed: () {
-                  // controller.isShowSearch.value = true;
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          child: TextField(
-                            onSubmitted: (text) {
-                              controller.page = 1;
-                              controller.keyword.value = text;
-                              controller.getIndex();
-                            },
-                            decoration: InputDecoration(
-                                prefixIcon: IconButton(
-                                    onPressed: () {
-                                      controller.page = 1;
-                                      controller.keyword.value = "";
-                                      controller.getIndex();
-                                      controller.isShowSearch.value = false;
-                                    },
-                                    icon: const Icon(Icons.arrow_back)),
-                                suffix: IconButton(
-                                  onPressed: () {
-                                    controller.page = 1;
-                                    controller.keyword.value = "";
-                                    controller.getIndex();
-                                  },
-                                  icon: const Icon(Icons.clear),
-                                ),
-                                hintText: "输入后点击软键盘回车键搜索"),
-                          ),
-                        );
-                      });
+                  controller.isShowSearch.value = true;
                 },
                 icon: const Icon(Icons.search)),
             IconButton(
@@ -96,6 +65,7 @@ class HomeScreen extends GetView<HomeCon> {
           ),
         ),
         drawer: Drawer(
+          width: 220,
           child: Column(
             children: [
               DrawerHeader(
@@ -134,54 +104,98 @@ class HomeScreen extends GetView<HomeCon> {
             ],
           ),
         ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            controller.page = 1;
-            await controller.getIndex();
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Obx(() => MasonryGridView.count(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  shrinkWrap: true,
-                  itemCount: controller.vodInfo.length,
-                  itemBuilder: (context, index) {
-                    if (controller.page <= controller.pageC &&
-                        index == controller.vodInfo.length - 1) {
-                      controller.getIndex();
-                    }
-                    var element = controller.vodInfo[index];
-
-                    return InkWell(
-                      child: Column(
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: element.vodPic,
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) => SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: CircularProgressIndicator(
-                                  value: downloadProgress.progress),
-                            ),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                            fit: BoxFit.cover,
-                            cacheManager: EsoImageCacheManager(),
-                          ),
-                          Text(element.vodName,
-                              maxLines: 3, overflow: TextOverflow.ellipsis)
-                        ],
-                      ),
-                      onTap: () {
-                        Get.toNamed(Routes.player, arguments: element);
+        body: Column(
+          children: [
+            Obx(
+              () => Visibility(
+                visible: controller.isShowSearch.value,
+                child: SizedBox(
+                  height: 55,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      onSubmitted: (text) {
+                        controller.page = 1;
+                        controller.keyword.value = text;
+                        controller.getIndex();
                       },
-                    );
-                  },
-                )),
-          ),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                          ),
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              controller.isShowSearch.value = false;
+                              controller.page = 1;
+                              controller.keyword.value = "";
+                              controller.getIndex();
+                            },
+                            icon: const Icon(Icons.clear),
+                          ),
+                          hintText: "输入后点击软键盘回车键搜索"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  controller.page = 1;
+                  await controller.getIndex();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Obx(() => MasonryGridView.count(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        shrinkWrap: true,
+                        itemCount: controller.vodInfo.length,
+                        itemBuilder: (context, index) {
+                          if (controller.page <= controller.pageC &&
+                              index == controller.vodInfo.length - 1) {
+                            controller.getIndex();
+                          }
+                          var element = controller.vodInfo[index];
+
+                          return InkWell(
+                            child: Column(
+                              children: [
+                                CachedNetworkImage(
+                                  imageUrl: element.vodPic,
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                  fit: BoxFit.cover,
+                                  cacheManager: EsoImageCacheManager(),
+                                ),
+                                Text(element.vodName,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis)
+                              ],
+                            ),
+                            onTap: () {
+                              Get.toNamed(Routes.player, arguments: element);
+                            },
+                          );
+                        },
+                      )),
+                ),
+              ),
+            ),
+          ],
         ));
   }
 }
