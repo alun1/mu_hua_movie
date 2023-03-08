@@ -11,7 +11,7 @@ class PlayerCon extends GetxController {
   late List<String> vodPlayFromList;
   var currentPlayFromIndex = 0.obs;
 
-  var currentDataSourceIndex=0.obs;
+  var currentDataSourceIndex = 0.obs;
 
   @override
   void onInit() {
@@ -28,6 +28,9 @@ class PlayerCon extends GetxController {
 
     vodPlayUrlEntityList.value = vodPlayUrlTypeArray.map((e) {
       var vodPlayUrlArray = e.split('#');
+
+      vodPlayUrlArray.removeWhere((element) => element.isEmpty);
+
       var entityList = vodPlayUrlArray.map((e) {
         var item = e.split('\$');
         return MyBetterPlayerDataSource(
