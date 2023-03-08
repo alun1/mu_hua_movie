@@ -7,7 +7,11 @@ import 'net_base_repository.dart';
 
 class NetRepository extends NetBaseRepository {
   Future<ResponseBaseEntity?> getIndex(
-      {bool? isList = false, int? page, int? category, String? keyword}) async {
+      {String? url,
+      bool? isList = false,
+      int? page,
+      int? category,
+      String? keyword}) async {
     Map<String, dynamic> map = {};
     if (isList == true) {
       map['ac'] = "list";
@@ -26,7 +30,7 @@ class NetRepository extends NetBaseRepository {
       map['wd'] = keyword;
     }
 
-    var selectSourceUrl = Get.find<MyService>().selectSourceUrl.value;
+    var selectSourceUrl = url ?? Get.find<MyService>().selectSourceUrl.value;
     Response<ResponseBaseEntity> response =
         await get<ResponseBaseEntity>(selectSourceUrl, query: map,
             decoder: (map) {
