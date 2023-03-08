@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mu_hua_movie/modules/source/source_entity.dart';
+import 'package:mu_hua_movie/service/my_service.dart';
 
 class SourceMangeCon extends GetxController {
   String addName = "";
@@ -11,7 +12,7 @@ class SourceMangeCon extends GetxController {
 
   late Box<SourceEntity> sourceBox;
 
-  var selectKey = "".obs;
+  late MyService myService;
 
   @override
   Future<void> onInit() async {
@@ -20,8 +21,7 @@ class SourceMangeCon extends GetxController {
     sourceBox = await Hive.openBox<SourceEntity>('source');
     count.value = sourceBox.length;
 
-    selectKey.value =
-        Get.find<Box>(tag: "allBox").get("selectSourceKey", defaultValue: "");
+    myService = Get.find<MyService>();
   }
 
   addSource() {
@@ -38,8 +38,8 @@ class SourceMangeCon extends GetxController {
       }
     });
 
-    if (selectKey.value.isEmpty) {
-      selectKey.value = addName;
+    if (myService.selectSourceKey.value.isEmpty) {
+      myService.selectSourceKey.value = addName;
       changeSelectSource(addSourceEntity);
     }
     Get.back();
@@ -62,7 +62,6 @@ class SourceMangeCon extends GetxController {
   }
 
   changeSelectSource(SourceEntity source) {
-    Get.find<Box>(tag: "allBox").put("selectSourceKey", source.name);
-    Get.find<Box>(tag: "allBox").put("selectSourceUrl", source.url);
+    myService.changeSelectSource(source.name, source.url);
   }
 }

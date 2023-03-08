@@ -1,5 +1,6 @@
 import 'package:mu_hua_movie/generated/json/base/json_field.dart';
 import 'package:mu_hua_movie/generated/json/response_base_entity.g.dart';
+import 'package:mu_hua_movie/model/entity/vd_class.dart';
 import 'dart:convert';
 
 import 'package:mu_hua_movie/model/entity/vod_info_entity.dart';
@@ -14,7 +15,9 @@ class ResponseBaseEntity {
 	String? limit;
 	int? total;
 	List<VodInfoEntity>? list;
-  
+	@JSONField(name: "class")
+	late List<VdClass> xClass;
+	
   ResponseBaseEntity();
 
   factory ResponseBaseEntity.fromJson(Map<String, dynamic> json) => $ResponseBaseEntityFromJson(json);

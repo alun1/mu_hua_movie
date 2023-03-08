@@ -1,26 +1,32 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+import 'package:mu_hua_movie/service/my_service.dart';
 import '../entity/response_base_entity.dart';
 import 'net_base_repository.dart';
 
 class NetRepository extends NetBaseRepository {
-  Future<ResponseBaseEntity?> getIndex(int page,
-      {String? category, String? keyword}) async {
-    var map = {
-      'ac': "videolist",
-      "pg": page.toString(),
-    };
-    if (category != null && category.isNotEmpty) {
-      map['t'] = category;
+  Future<ResponseBaseEntity?> getIndex(
+      {bool? isList = false, int? page, int? category, String? keyword}) async {
+    Map<String, dynamic> map = {};
+    if (isList == true) {
+      map['ac'] = "list";
+    } else {
+      map['ac'] = "videolist";
+    }
+
+    if (page != null) {
+      map['pg'] = page.toString();
+    }
+
+    if (category != null) {
+      map['t'] = category.toString();
     }
     if (keyword != null && keyword.isNotEmpty) {
       map['wd'] = keyword;
     }
 
-    var selectSourceUrl =
-        Get.find<Box>(tag: "allBox").get("selectSourceUrl", defaultValue: "");
+    var selectSourceUrl = Get.find<MyService>().selectSourceUrl.value;
     Response<ResponseBaseEntity> response =
         await get<ResponseBaseEntity>(selectSourceUrl, query: map,
             decoder: (map) {
@@ -28,17 +34,4 @@ class NetRepository extends NetBaseRepository {
     });
     return response.body;
   }
-//
-// Future<String?> getSearch(int page, String keyword) async {
-//   var map = {'ac': "videolist", "pg": page, "wd": keyword};
-//
-//   Response<String> response = await post<String>('', map);
-//   return response.body;
-// }
-//
-// Future<String?> getDetail(String movie_id) async {
-//   var map = {'ac': "videolist", "ids": movie_id};
-//   Response<String> response = await post<String>('api.php/provide/vod/', map);
-//   return response.body;
-// }
 }

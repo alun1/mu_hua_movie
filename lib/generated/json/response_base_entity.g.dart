@@ -1,5 +1,7 @@
 import 'package:mu_hua_movie/generated/json/base/json_convert_content.dart';
 import 'package:mu_hua_movie/model/entity/response_base_entity.dart';
+import 'package:mu_hua_movie/model/entity/vd_class.dart';
+
 import 'package:mu_hua_movie/model/entity/vod_info_entity.dart';
 
 
@@ -33,6 +35,10 @@ ResponseBaseEntity $ResponseBaseEntityFromJson(Map<String, dynamic> json) {
 	if (list != null) {
 		responseBaseEntity.list = list;
 	}
+	final List<VdClass>? xClass = jsonConvert.convertListNotNull<VdClass>(json['class']);
+	if (xClass != null) {
+		responseBaseEntity.xClass = xClass;
+	}
 	return responseBaseEntity;
 }
 
@@ -45,5 +51,6 @@ Map<String, dynamic> $ResponseBaseEntityToJson(ResponseBaseEntity entity) {
 	data['limit'] = entity.limit;
 	data['total'] = entity.total;
 	data['list'] =  entity.list?.map((v) => v.toJson()).toList();
+	data['class'] =  entity.xClass.map((v) => v.toJson()).toList();
 	return data;
 }

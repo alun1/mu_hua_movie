@@ -24,8 +24,9 @@ class SourceMangeScreen extends GetView<SourceMangeCon> {
                           Text(source?.name ?? ""),
                           const Spacer(),
                           Visibility(
-                              visible: controller.selectKey.value !=
-                                  (source?.name ?? ""),
+                              visible:
+                                  controller.myService.selectSourceKey.value !=
+                                      (source?.name ?? ""),
                               child: Row(
                                 children: [
                                   IconButton(
@@ -70,9 +71,10 @@ class SourceMangeScreen extends GetView<SourceMangeCon> {
                       ),
                       subtitle: Text(source?.url ?? ""),
                       value: source?.name ?? "",
-                      groupValue: controller.selectKey.value,
+                      groupValue: controller.myService.selectSourceKey.value,
                       onChanged: (value) {
-                        controller.selectKey.value = source?.name ?? "";
+                        controller.myService.selectSourceKey.value =
+                            source?.name ?? "";
                         controller.changeSelectSource(source!);
                       },
                     ));

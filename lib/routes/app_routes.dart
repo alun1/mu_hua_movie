@@ -5,5 +5,4 @@ abstract class Routes {
   static const home = '/home';
   static const player = '/player';
   static const source = '/source';
-
 }
