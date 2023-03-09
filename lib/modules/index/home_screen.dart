@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/service/my_service.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../routes/app_routes.dart';
 import '../../utils/EsoImageCacheManager.dart';
 import 'home_con.dart';
@@ -53,7 +54,6 @@ class HomeScreen extends GetView<HomeCon> {
                       }else{
                         controller.category.value = controller.vdClass[index-1];
                       }
-
                       controller.page = 1;
                       controller.getIndex();
                     },
@@ -99,12 +99,21 @@ class HomeScreen extends GetView<HomeCon> {
                   }),
               const Divider(),
               ListTile(
-                  title: const Text("订阅"),
+                  title: const Text("分享本app"),
                   trailing: const Icon(
                     Icons.arrow_forward_ios,
                     size: 15,
                   ),
-                  onTap: () {})
+                  onTap: () {
+                    Share.share('check out my website https://example.com');
+                  })
+              // ListTile(
+              //     title: const Text("订阅"),
+              //     trailing: const Icon(
+              //       Icons.arrow_forward_ios,
+              //       size: 15,
+              //     ),
+              //     onTap: () {})
             ],
           ),
         ),

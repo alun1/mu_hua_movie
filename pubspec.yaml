@@ -54,6 +54,8 @@ dependencies:
 
   hive_flutter: ^1.1.0
 
+  share_plus: ^6.3.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -69,7 +71,7 @@ dev_dependencies:
 
   build_runner: ^2.3.3
 
-  share_plus: ^6.3.1
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
