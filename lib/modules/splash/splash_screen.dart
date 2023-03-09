@@ -11,8 +11,9 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     init();
-
-    return const Material(child: Center(child: Text("源播")));
+    return const Scaffold(
+        backgroundColor: Colors.teal,
+        body: Center(child: Icon(Icons.play_arrow, color: Colors.white,size: 100,)));
   }
 
   init() async {

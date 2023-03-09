@@ -3,7 +3,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="mu_hua_movie"
+        android:label="源播"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

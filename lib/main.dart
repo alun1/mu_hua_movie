@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:mu_hua_movie/routes/app_page.dart';
 import 'getx_bindings/my_bindings.dart';
-import 'modules/source/source_entity.dart';
 
 Future<void> main() async {
 
@@ -17,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: '源播',
       theme: ThemeData.light(useMaterial3: true),
       darkTheme: ThemeData.dark(useMaterial3: true),
       initialRoute: AppPages.initial,
