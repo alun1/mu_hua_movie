@@ -19,20 +19,17 @@ class SourceEntityAdapter extends TypeAdapter<SourceEntity> {
     return SourceEntity(
       fields[0] as String,
       fields[1] as String,
-      fields[2] == null ? false : fields[2] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, SourceEntity obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.url)
-      ..writeByte(2)
-      ..write(obj.isSelect);
+      ..write(obj.url);
   }
 
   @override

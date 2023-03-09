@@ -27,7 +27,7 @@ class SplashScreen extends StatelessWidget {
       Hive.registerAdapter(SourceEntityAdapter());
     }
 
-    await Get.find<MyService>().init();
+    await Get.find<MyService>().initBox();
     Get.offAndToNamed(Routes.home);
   }
 }

@@ -13,7 +13,7 @@ class HomeCon extends GetxController {
   var keyword = "".obs;
   var isShowSearch = false.obs;
 
-  Rx<int?> categoryId = Rx(null);
+  Rx<VdClass?> category = Rx(null);
 
   @override
   void onInit() {
@@ -21,7 +21,7 @@ class HomeCon extends GetxController {
     getIndex();
 
     Get.find<MyService>().selectSourceUrl.listen((p0) {
-      categoryId.value = null;
+      category.value = null;
       page = 1;
       getCategory();
       getIndex(url: p0);
@@ -36,7 +36,7 @@ class HomeCon extends GetxController {
           url: url,
           page: page,
           keyword: keyword.value,
-          category: categoryId.value);
+          category: category.value?.typeId);
       if (page == 1) {
         vodInfo.clear();
       }

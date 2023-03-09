@@ -29,7 +29,7 @@ class SourceMangeCon extends GetxController {
     //   Get.snackbar("提示", "标题重复了，换一个吧");
     //   return;
     // }
-    final addSourceEntity = SourceEntity(addName, addUrl, true);
+    final addSourceEntity = SourceEntity(addName, addUrl);
     sourceBox.put(addName, addSourceEntity).then((value) {
       if (count.value == sourceBox.length) {
         count.refresh();

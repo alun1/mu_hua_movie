@@ -40,16 +40,20 @@ class HomeScreen extends GetView<HomeCon> {
           width: 200,
           child: Obx(
             () => ListView.separated(
-              itemCount: controller.vdClass.length,
+              itemCount: controller.vdClass.length+1,
               itemBuilder: (context, index) {
                 return Obx(
                   () => RadioListTile(
-                    title: Text(controller.vdClass[index].typeName),
-                    value: controller.vdClass[index].typeId,
-                    groupValue: controller.categoryId.value,
+                    title: Text(index == 0 ?"全部":controller.vdClass[index-1].typeName),
+                    value:index == 0 ?null : controller.vdClass[index-1],
+                    groupValue: controller.category.value,
                     onChanged: (value) {
-                      controller.categoryId.value =
-                          controller.vdClass[index].typeId;
+                      if(index == 0){
+                        controller.category.value = null;
+                      }else{
+                        controller.category.value = controller.vdClass[index-1];
+                      }
+
                       controller.page = 1;
                       controller.getIndex();
                     },

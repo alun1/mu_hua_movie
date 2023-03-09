@@ -8,8 +8,6 @@ class SourceEntity {
   late String name;
   @HiveField(1)
   late String url;
-  @HiveField(2, defaultValue: false)
-  late bool isSelect;
 
-  SourceEntity(this.name, this.url, this.isSelect);
+  SourceEntity(this.name, this.url);
 }
