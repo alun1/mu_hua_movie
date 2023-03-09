@@ -49,6 +49,8 @@ class PlayerScreen extends GetView<PlayerCon> {
                   betterPlayerConfiguration: BetterPlayerConfiguration(
                       autoPlay: true,
                       looping: true,
+                      fit: BoxFit.fitHeight,
+                      allowedScreenSleep: false,
                       placeholder: CachedNetworkImage(
                           width: Get.width,
                           height: 210,
@@ -93,13 +95,14 @@ class PlayerScreen extends GetView<PlayerCon> {
                 child: Row(
                   children: [
                     Obx(
-                      () => Text(
-                        "${controller.arguments.vodName} ${controller.vodPlayUrlEntityList[controller.currentPlayFromIndex.value][controller.currentDataSourceIndex.value].name}",
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+                      () => Flexible(
+                        child: Text(
+                          "${controller.arguments.vodName} - ${controller.vodPlayUrlEntityList[controller.currentPlayFromIndex.value][controller.currentDataSourceIndex.value].name}",
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
-                    const Spacer(),
                     const Text(
                       "介绍",
                       style: TextStyle(fontSize: 14, color: Colors.grey),

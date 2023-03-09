@@ -17,7 +17,7 @@ class AppPages {
     GetPage(
         name: Routes.home,
         page: () => HomeScreen(),
-        binding: BindingsBuilder.put(() => HomeCon())),
+        binding: BindingsBuilder.put(() => HomeCon(), permanent: true)),
     GetPage(
         name: Routes.player,
         page: () => PlayerScreen(),

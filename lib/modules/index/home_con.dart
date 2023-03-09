@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/model/repository/net_repository.dart';
+import 'package:mu_hua_movie/service/my_service.dart';
 
 import '../../model/entity/vd_class.dart';
 import '../../model/entity/vod_info_entity.dart';
@@ -19,13 +20,23 @@ class HomeCon extends GetxController {
     getCategory();
     getIndex();
 
+    Get.find<MyService>().selectSourceUrl.listen((p0) {
+      categoryId.value = null;
+      page = 1;
+      getCategory();
+      getIndex(url: p0);
+    });
+
     super.onInit();
   }
 
-  getIndex() async {
+  getIndex({String? url}) async {
     try {
-      var req = await Get.find<NetRepository>()
-          .getIndex(page: page, keyword: keyword.value,category: categoryId.value);
+      var req = await Get.find<NetRepository>().getIndex(
+          url: url,
+          page: page,
+          keyword: keyword.value,
+          category: categoryId.value);
       if (page == 1) {
         vodInfo.clear();
       }
