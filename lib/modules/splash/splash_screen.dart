@@ -13,7 +13,12 @@ class SplashScreen extends StatelessWidget {
     init();
     return const Scaffold(
         backgroundColor: Colors.teal,
-        body: Center(child: Icon(Icons.play_arrow, color: Colors.white,size: 100,)));
+        body: Center(
+            child: Icon(
+          Icons.play_arrow,
+          color: Colors.white,
+          size: 100,
+        )));
   }
 
   init() async {
@@ -22,12 +27,7 @@ class SplashScreen extends StatelessWidget {
       Hive.registerAdapter(SourceEntityAdapter());
     }
 
-    final myService = MyService();
-    await myService.init();
-    Get.put(myService);
-
-    Future.delayed(const Duration(seconds: 2)).then((value) {
-      Get.offAndToNamed(Routes.home);
-    });
+    await Get.find<MyService>().init();
+    Get.offAndToNamed(Routes.home);
   }
 }
