@@ -34,19 +34,17 @@ class MyService extends GetxService {
           SourceEntity(
               "天空资源", "https://api.tiankongapi.com/api.php/provide/vod/"));
 
+      sourceBox.put("淘片",
+          SourceEntity("淘片", " https://sdzyapi.com/api.php/provide/vod/"));
+
       allBox.put("selectSourceUrl",
           "https://collect.wolongzyw.com/api.php/provide/vod/");
       allBox.put("selectSourceKey", "卧龙资源");
+      //
+      // sourceBox.put("老鸭",
+      //     SourceEntity("老鸭", "https://api.apilyzy.com/api.php/provide/vod/"));
 
-      sourceBox.put(
-          "老鸭",
-          SourceEntity(
-              "老鸭", "https://api.apilyzy.com/api.php/provide/vod"));
 
-      sourceBox.put(
-          "辣椒",
-          SourceEntity(
-              "辣椒", "https://apilj.com/api.php/provide/vod/at/json/"));
 
       allBox.put("isFirstRun", false);
     }
