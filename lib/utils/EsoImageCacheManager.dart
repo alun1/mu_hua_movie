@@ -8,7 +8,7 @@ import 'dart:io';
 class EsoImageCacheManager extends CacheManager {
   static const key = 'libEsoCachedImageData';
 
-  static  EsoImageCacheManager? _instance;
+  static EsoImageCacheManager? _instance;
 
   factory EsoImageCacheManager() {
     _instance ??= EsoImageCacheManager._();
@@ -27,7 +27,6 @@ class EsoHttpFileService extends FileService {
     _httpClient.badCertificateCallback = (cert, host, port) => true;
   }
 
-
   @override
   Future<FileServiceResponse> get(String url,
       {Map<String, String>? headers}) async {
@@ -40,7 +39,7 @@ class EsoHttpFileService extends FileService {
     final http.StreamedResponse response = http.StreamedResponse(
       httpResponse.timeout(const Duration(seconds: 60)),
       httpResponse.statusCode,
-      contentLength: httpResponse.contentLength,
+      // contentLength: httpResponse.contentLength,
       reasonPhrase: httpResponse.reasonPhrase,
       isRedirect: httpResponse.isRedirect,
     );

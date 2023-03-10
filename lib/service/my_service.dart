@@ -35,7 +35,7 @@ class MyService extends GetxService {
               "天空资源", "https://api.tiankongapi.com/api.php/provide/vod/"));
 
       sourceBox.put("淘片",
-          SourceEntity("淘片", " https://sdzyapi.com/api.php/provide/vod/"));
+          SourceEntity("淘片", "https://sdzyapi.com/api.php/provide/vod/"));
 
       allBox.put("selectSourceUrl",
           "https://collect.wolongzyw.com/api.php/provide/vod/");
