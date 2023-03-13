@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mu_hua_movie/model/repository/net_versoin_update_repository.dart';
@@ -8,6 +7,8 @@ import '../../service/my_service.dart';
 import '../source/source_entity.dart';
 
 class SplashCon extends GetxController {
+
+  var progress = 0.0.obs;
   @override
   void onReady() {
     init();
@@ -20,6 +21,7 @@ class SplashCon extends GetxController {
     }
 
     await Get.find<MyService>().initBox();
+    await updateVersion();
     Get.offAndToNamed(Routes.home);
   }
 
@@ -37,6 +39,11 @@ class SplashCon extends GetxController {
         int force = platformUpdateInfo["force"];
         String log = platformUpdateInfo["log"];
         String url = platformUpdateInfo["url"];
+
+        await Get.find<NetVersionUpdateRepository>().downApp(url,
+            onDownloadProgress: (int byteCount, int totalBytes) {
+              progress.value =  byteCount/totalBytes;
+            });
       }
     }
   }
