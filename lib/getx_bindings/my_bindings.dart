@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../model/repository/net_repository.dart';
+import '../model/repository/net_versoin_update_repository.dart';
 import '../service/my_service.dart';
 
 class MyBinding implements Bindings {
@@ -10,6 +11,6 @@ class MyBinding implements Bindings {
 
     final myService = MyService();
     Get.put(myService, permanent: true);
-
+    Get.put(NetVersionUpdateRepository(), permanent: true);
   }
 }
