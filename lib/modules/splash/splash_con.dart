@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mu_hua_movie/model/repository/net_versoin_update_repository.dart';
+import 'package:mu_hua_movie/native_channel/native_channel.dart';
 import '../../routes/app_routes.dart';
 import '../../service/my_service.dart';
 import '../source/source_entity.dart';
@@ -39,13 +40,12 @@ class SplashCon extends GetxController {
         String log = platformUpdateInfo["log"];
         String url = platformUpdateInfo["url"];
 
-
-        await Get.find<NetVersionUpdateRepository>().downApp(url,
+        String path = await Get.find<NetVersionUpdateRepository>().downApp(url,
             onDownloadProgress: (int byteCount, int totalBytes) {
           progress.value = byteCount / totalBytes;
         });
 
-
+        await NativeChannel().installApk(path);
       }
     }
   }

@@ -24,7 +24,7 @@ class NetVersionUpdateRepository extends NetBaseRepository {
     } catch (e) {
       return Future.error(e);
     }
-    Directory appDocDir = await getApplicationDocumentsDirectory();
+    Directory appDocDir = await getTemporaryDirectory();
     String path = "${appDocDir.path}/eeee.apk";
     File file = File(path);
     var raf = file.openSync(mode: FileMode.write);
