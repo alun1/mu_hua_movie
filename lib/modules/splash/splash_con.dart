@@ -7,8 +7,8 @@ import '../../service/my_service.dart';
 import '../source/source_entity.dart';
 
 class SplashCon extends GetxController {
-
   var progress = 0.0.obs;
+
   @override
   void onReady() {
     init();
@@ -30,9 +30,8 @@ class SplashCon extends GetxController {
         await Get.find<NetVersionUpdateRepository>().getUpdateInfo();
     if (updateInfo != null) {
       Map<String, dynamic>? platformUpdateInfo;
-      if (Platform.isAndroid) {
-        platformUpdateInfo = updateInfo["android"];
-      }
+
+      platformUpdateInfo = updateInfo[Platform.operatingSystem];
       if (platformUpdateInfo != null) {
         int versionCode = platformUpdateInfo["versionCode"];
         String versionName = platformUpdateInfo["versionName"];
@@ -40,10 +39,13 @@ class SplashCon extends GetxController {
         String log = platformUpdateInfo["log"];
         String url = platformUpdateInfo["url"];
 
+
         await Get.find<NetVersionUpdateRepository>().downApp(url,
             onDownloadProgress: (int byteCount, int totalBytes) {
-              progress.value =  byteCount/totalBytes;
-            });
+          progress.value = byteCount / totalBytes;
+        });
+
+
       }
     }
   }

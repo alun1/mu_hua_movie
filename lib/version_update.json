@@ -1,0 +1,12 @@
+{
+  "android": {
+    "versionCode": 2,
+    "versionName": "1.0.1",
+    "log": "更新",
+    "force": 1,
+    "url": "https://ec2-3-85-234-92.compute-1.amazonaws.com/app-release.apk"
+  },
+  "ios": {
+
+  }
+}
