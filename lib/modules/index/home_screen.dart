@@ -30,48 +30,47 @@ class HomeScreen extends GetView<HomeCon> {
                   controller.isShowSearch.value = true;
                 },
                 icon: const Icon(Icons.search)),
-            IconButton(
+            OutlinedButton.icon(
                 onPressed: () {
                   _scaffoldKey.currentState?.openEndDrawer();
                 },
-                icon: const Icon(Icons.category)),
+              icon: const Icon(Icons.category),
+              label: Obx(()=> Text(controller.category.value?.typeName??"全部",style: const TextStyle(fontSize: 12),)),
+              ),
           ],
         ),
         endDrawer: Drawer(
           width: 200,
           child: Obx(
-                () =>
-                ListView.separated(
-                  itemCount: controller.vdClass.length + 1,
-                  itemBuilder: (context, index) {
-                    return Obx(
-                          () =>
-                          RadioListTile(
-                            title: Text(
-                                index == 0 ? "全部" : controller.vdClass[index -
-                                    1].typeName),
-                            value: index == 0 ? null : controller
-                                .vdClass[index - 1],
-                            groupValue: controller.category.value,
-                            onChanged: (value) {
-                              if (index == 0) {
-                                controller.category.value = null;
-                              } else {
-                                controller.category.value =
-                                controller.vdClass[index - 1];
-                              }
-                              controller.page = 1;
-                              controller.getIndex();
-                            },
-                          ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      width: 5,
-                    );
-                  },
-                ),
+            () => ListView.separated(
+              itemCount: controller.vdClass.length + 1,
+              itemBuilder: (context, index) {
+                return Obx(
+                  () => RadioListTile(
+                    title: Text(index == 0
+                        ? "全部"
+                        : controller.vdClass[index - 1].typeName),
+                    value: index == 0 ? null : controller.vdClass[index - 1],
+                    groupValue: controller.category.value,
+                    onChanged: (value) {
+                      if (index == 0) {
+                        controller.category.value = null;
+                      } else {
+                        controller.category.value =
+                            controller.vdClass[index - 1];
+                      }
+                      controller.page = 1;
+                      controller.getIndex();
+                    },
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(
+                  width: 5,
+                );
+              },
+            ),
           ),
         ),
         drawer: Drawer(
@@ -80,24 +79,20 @@ class HomeScreen extends GetView<HomeCon> {
             children: [
               DrawerHeader(
                   child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "源播",
-                          style:
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "源播",
+                      style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        Obx(() =>
-                            Text(
-                                "当前播放源：${Get
-                                    .find<MyService>()
-                                    .selectSourceKey
-                                    .value}")),
-                      ],
                     ),
-                  )),
+                    Obx(() => Text(
+                        "当前播放源：${Get.find<MyService>().selectSourceKey.value}")),
+                  ],
+                ),
+              )),
               ListTile(
                   title: const Text("源管理"),
                   trailing: const Icon(
@@ -130,41 +125,40 @@ class HomeScreen extends GetView<HomeCon> {
         body: Column(
           children: [
             Obx(
-                  () =>
-                  Visibility(
-                    visible: controller.isShowSearch.value,
-                    child: SizedBox(
-                      height: 55,
-                      child: Padding(
-                        padding:
+              () => Visibility(
+                visible: controller.isShowSearch.value,
+                child: SizedBox(
+                  height: 55,
+                  child: Padding(
+                    padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                        child: TextField(
-                          textAlignVertical: TextAlignVertical.center,
-                          onSubmitted: (text) {
-                            controller.page = 1;
-                            controller.keyword.value = text;
-                            controller.getIndex();
-                          },
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6.0),
-                              ),
-                              contentPadding:
+                    child: TextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      onSubmitted: (text) {
+                        controller.page = 1;
+                        controller.keyword.value = text;
+                        controller.getIndex();
+                      },
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                          ),
+                          contentPadding:
                               const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  controller.isShowSearch.value = false;
-                                  controller.page = 1;
-                                  controller.keyword.value = "";
-                                  controller.getIndex();
-                                },
-                                icon: const Icon(Icons.clear),
-                              ),
-                              hintText: "输入后点击软键盘回车键搜索"),
-                        ),
-                      ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              controller.isShowSearch.value = false;
+                              controller.page = 1;
+                              controller.keyword.value = "";
+                              controller.getIndex();
+                            },
+                            icon: const Icon(Icons.clear),
+                          ),
+                          hintText: "输入后点击软键盘回车键搜索"),
                     ),
                   ),
+                ),
+              ),
             ),
             Flexible(
               child: RefreshIndicator(
@@ -174,8 +168,7 @@ class HomeScreen extends GetView<HomeCon> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Obx(() =>
-                      MasonryGridView.count(
+                  child: Obx(() => MasonryGridView.count(
                         crossAxisCount: 3,
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
@@ -195,19 +188,19 @@ class HomeScreen extends GetView<HomeCon> {
                                   imageUrl: element.vodPic,
                                   progressIndicatorBuilder:
                                       (context, url, downloadProgress) =>
-                                      SizedBox(
-                                        width: 30,
-                                        height: 30,
-                                        child: CircularProgressIndicator(
-                                            value: downloadProgress.progress),
-                                      ),
+                                          SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress),
+                                  ),
                                   errorWidget: (context, url, error) {
                                     return const Icon(Icons.error);
                                   },
                                   fit: BoxFit.cover,
                                   cacheManager: EsoImageCacheManager(),
                                 ),
-                               // Image.network( element.vodPic),
+                                // Image.network( element.vodPic),
                                 Text(element.vodName,
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis)

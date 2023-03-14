@@ -36,7 +36,7 @@ class HomeCon extends GetxController {
           url: url,
           page: page,
           keyword: keyword.value,
-          category: category.value?.typeId);
+          category: category.value?.typeId.toString() );
       if (page == 1) {
         vodInfo.clear();
       }

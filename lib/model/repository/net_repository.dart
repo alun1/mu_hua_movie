@@ -10,7 +10,7 @@ class NetRepository extends NetBaseRepository {
       {String? url,
       bool? isList = false,
       int? page,
-      int? category,
+      String? category,
       String? keyword}) async {
     Map<String, dynamic> map = {};
     if (isList == true) {
@@ -23,8 +23,8 @@ class NetRepository extends NetBaseRepository {
       map['pg'] = page.toString();
     }
 
-    if (category != null) {
-      map['t'] = category.toString();
+    if (category != null && category.isNotEmpty) {
+      map['t'] = category;
     }
     if (keyword != null && keyword.isNotEmpty) {
       map['wd'] = keyword;
