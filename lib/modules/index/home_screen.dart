@@ -110,7 +110,7 @@ class HomeScreen extends GetView<HomeCon> {
                     size: 15,
                   ),
                   onTap: () {
-                    Share.share('check out my website https://example.com');
+                    Share.share('复制到浏览器下载 https://ec2-3-85-234-92.compute-1.amazonaws.com/app-release.apk');
                   })
               // ListTile(
               //     title: const Text("订阅"),
