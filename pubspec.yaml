@@ -44,7 +44,7 @@ dependencies:
 
   flutter_cache_manager: ^3.3.0
 
-#  http: ^0.13.5
+  #  http: ^0.13.5
 
   flutter_staggered_grid_view: ^0.6.2
 
@@ -62,6 +62,11 @@ dependencies:
 
   permission_handler: ^10.2.0
 
+  talkingdata_sdk_plugin:
+    path: ./talkingdata_sdk_plugin
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -76,6 +81,10 @@ dev_dependencies:
   hive_generator: 2.0.0
 
   build_runner: ^2.3.3
+#
+#  talkingdata_sdk_plugin:
+#    path: plugins/talkingdata_sdk_plugin
+
 
 
 
