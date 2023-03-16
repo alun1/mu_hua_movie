@@ -34,8 +34,8 @@ class HomeCon extends GetxController {
   }
   @override
   onClose(){
-    super.onClose();
     TalkingDataSDK.onPageEnd("主页面");
+    super.onClose();
   }
 
   getIndex({String? url}) async {

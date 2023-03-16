@@ -16,8 +16,8 @@ class PlayerCon extends GetxController {
 
   @override
   void onInit() {
-    TalkingDataSDK.onPageBegin("播放");
     super.onInit();
+    TalkingDataSDK.onPageBegin("播放");
     arguments = Get.arguments;
 
     vodPlayFromList = arguments.vodPlayFrom.split('\$\$\$');
@@ -26,9 +26,9 @@ class PlayerCon extends GetxController {
   }
 
   @override
-  onClose(){
-    super.onClose();
+  onClose() {
     TalkingDataSDK.onPageEnd("播放");
+    super.onClose();
   }
 
   analysisUrl(String vodPlayUrlStr) {
