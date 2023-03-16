@@ -18,8 +18,7 @@ class PlayerCon extends GetxController {
       GlobalKey();
 
   BetterPlayerPlaylistController? get betterPlayerPlaylistController =>
-      betterPlayerPlaylistStateKey
-          .currentState?.betterPlayerPlaylistController;
+      betterPlayerPlaylistStateKey.currentState?.betterPlayerPlaylistController;
 
   @override
   void onInit() {
@@ -39,7 +38,7 @@ class PlayerCon extends GetxController {
 
     betterPlayerPlaylistController?.betterPlayerController
         ?.addEventsListener((event) {
-      print("Better player event: ${event.betterPlayerEventType}");
+      // print("Better player event: ${event.betterPlayerEventType}");
       if (event.betterPlayerEventType ==
           BetterPlayerEventType.setupDataSource) {
         currentDataSourceIndex.value =
@@ -57,11 +56,20 @@ class PlayerCon extends GetxController {
   analysisUrl(String vodPlayUrlStr) {
     var vodPlayUrlTypeArray = vodPlayUrlStr.split('\$\$\$');
 
+    vodPlayUrlTypeArray.removeWhere((element) {
+      if (element.contains(".m3u8") ||
+          element.contains(".m3u") ||
+          element.contains(".mp4")) {
+        return false;
+      }
+      int index = vodPlayUrlTypeArray.indexOf(element);
+      vodPlayFromList.removeAt(index);
+      return true;
+    });
+
     vodPlayUrlEntityList.value = vodPlayUrlTypeArray.map((e) {
       var vodPlayUrlArray = e.split('#');
-
       vodPlayUrlArray.removeWhere((element) => element.isEmpty);
-
       var entityList = vodPlayUrlArray.map((e) {
         var item = e.split('\$');
         return MyBetterPlayerDataSource(

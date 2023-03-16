@@ -1,12 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:extended_betterplayer/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/modules/player/player_con.dart';
 
 class PlayerScreen extends GetView<PlayerCon> {
-  PlayerScreen({super.key});
+  const PlayerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +27,23 @@ class PlayerScreen extends GetView<PlayerCon> {
             () => BetterPlayerPlaylist(
                 key: controller.betterPlayerPlaylistStateKey,
                 betterPlayerConfiguration: const BetterPlayerConfiguration(
-                  fit: BoxFit.contain,
-                  autoPlay: true,
-                  looping: true,
-                  // placeholder: CachedNetworkImage(
-                  //     width: Get.width,
-                  //     fit: BoxFit.cover,
-                  //     imageUrl: controller.arguments.vodPic),
-                  allowedScreenSleep: false,
-                  autoDetectFullscreenDeviceOrientation: true,
-                  autoDetectFullscreenAspectRatio: true,
-                ),
+                    fit: BoxFit.contain,
+                    autoPlay: true,
+                    looping: true,
+                    // placeholder: CachedNetworkImage(
+                    //     width: Get.width,
+                    //     fit: BoxFit.cover,
+                    //     imageUrl: controller.arguments.vodPic),
+                    allowedScreenSleep: false,
+                    fullScreenByDefault: true,
+                    autoDetectFullscreenDeviceOrientation: true,
+                    autoDetectFullscreenAspectRatio: true,
+                    deviceOrientationsAfterFullScreen: [
+                      DeviceOrientation.portraitUp,
+                      DeviceOrientation.portraitDown,
+                      // DeviceOrientation.landscapeLeft,
+                      // DeviceOrientation.landscapeRight,
+                    ]),
                 betterPlayerPlaylistConfiguration:
                     const BetterPlayerPlaylistConfiguration(),
                 betterPlayerDataSourceList: controller.vodPlayUrlEntityList[
@@ -80,11 +85,7 @@ class PlayerScreen extends GetView<PlayerCon> {
                     flex: 1,
                     child: Obx(
                       () => Text(
-                        controller
-                            .vodPlayUrlEntityList[controller
-                                .currentPlayFromIndex
-                                .value][controller.currentDataSourceIndex.value]
-                            .name,
+                        "${controller.arguments.vodName} ${controller.vodPlayUrlEntityList[controller.currentPlayFromIndex.value][controller.currentDataSourceIndex.value].name}",
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600),
                       ),
@@ -103,31 +104,41 @@ class PlayerScreen extends GetView<PlayerCon> {
           const Divider(),
           SizedBox(
             height: 40,
-            child: ListView.separated(
-                separatorBuilder: (BuildContext context, int index) {
-                  return const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 2));
-                },
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                scrollDirection: Axis.horizontal,
-                itemCount: controller.vodPlayFromList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Row(children: [
-                    Obx(() => Radio(
-                          value: index,
-                          groupValue: controller.currentPlayFromIndex.value,
-                          onChanged: (int? value) {
-                            controller.currentPlayFromIndex.value = value!;
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const Text("线路："),
+                  Flexible(
+                    child: ListView.separated(
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 2));
+                        },
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.vodPlayFromList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Row(children: [
+                            Obx(() => Radio(
+                                  value: index,
+                                  groupValue: controller.currentPlayFromIndex.value,
+                                  onChanged: (int? value) {
+                                    controller.currentPlayFromIndex.value = value!;
 
-                            controller.betterPlayerPlaylistController
-                                ?.setupDataSourceList(
-                                    controller.vodPlayUrlEntityList[value]);
-                          },
-                        )),
-                    Text(controller.vodPlayFromList[index],
-                        style: const TextStyle(fontSize: 14))
-                  ]);
-                }),
+                                    controller.betterPlayerPlaylistController
+                                        ?.setupDataSourceList(
+                                            controller.vodPlayUrlEntityList[value]);
+                                  },
+                                )),
+                            Text(controller.vodPlayFromList[index],
+                                style: const TextStyle(fontSize: 14))
+                          ]);
+                        }),
+                  ),
+                ],
+              ),
+            ),
           ),
           const Divider(),
           Flexible(
