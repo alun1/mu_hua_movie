@@ -805,6 +805,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.1"
+  talkingdata_sdk_plugin:
+    dependency: "direct main"
+    description:
+      path: talkingdata_sdk_plugin
+      relative: true
+    source: path
+    version: "0.0.1"
   term_glyph:
     dependency: transitive
     description:

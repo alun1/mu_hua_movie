@@ -1,4 +1,5 @@
 import 'package:extended_betterplayer/better_player.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/model/entity/vod_info_entity.dart';
 import 'package:talkingdata_sdk_plugin/talkingdata_sdk_plugin.dart';
@@ -13,6 +14,12 @@ class PlayerCon extends GetxController {
   var currentPlayFromIndex = 0.obs;
 
   var currentDataSourceIndex = 0.obs;
+  final GlobalKey<BetterPlayerPlaylistState> betterPlayerPlaylistStateKey =
+      GlobalKey();
+
+  BetterPlayerPlaylistController? get betterPlayerPlaylistController =>
+      betterPlayerPlaylistStateKey
+          .currentState?.betterPlayerPlaylistController;
 
   @override
   void onInit() {
@@ -23,6 +30,22 @@ class PlayerCon extends GetxController {
     vodPlayFromList = arguments.vodPlayFrom.split('\$\$\$');
     String vodPlayUrlStr = arguments.vodPlayUrl;
     analysisUrl(vodPlayUrlStr);
+  }
+
+  @override
+  void onReady() {
+    // TODO: implement onReady
+    super.onReady();
+
+    betterPlayerPlaylistController?.betterPlayerController
+        ?.addEventsListener((event) {
+      print("Better player event: ${event.betterPlayerEventType}");
+      if (event.betterPlayerEventType ==
+          BetterPlayerEventType.setupDataSource) {
+        currentDataSourceIndex.value =
+            betterPlayerPlaylistController?.currentDataSourceIndex ?? 0;
+      }
+    });
   }
 
   @override

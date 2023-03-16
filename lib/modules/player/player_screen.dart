@@ -6,26 +6,7 @@ import 'package:get/get.dart';
 import 'package:mu_hua_movie/modules/player/player_con.dart';
 
 class PlayerScreen extends GetView<PlayerCon> {
-  final GlobalKey<BetterPlayerPlaylistState> _betterPlayerPlaylistStateKey =
-      GlobalKey();
-
-  BetterPlayerPlaylistController? get _betterPlayerPlaylistController =>
-      _betterPlayerPlaylistStateKey
-          .currentState?.betterPlayerPlaylistController;
-
-  PlayerScreen({super.key}) {
-    WidgetsBinding.instance.addPersistentFrameCallback((Duration timeStamp) {
-      _betterPlayerPlaylistController?.betterPlayerController
-          ?.addEventsListener((event) {
-        print("Better player event: ${event.betterPlayerEventType}");
-        if (event.betterPlayerEventType ==
-            BetterPlayerEventType.setupDataSource) {
-          controller.currentDataSourceIndex.value =
-              _betterPlayerPlaylistController?.currentDataSourceIndex ?? 0;
-        }
-      });
-    });
-  }
+  PlayerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,21 +20,25 @@ class PlayerScreen extends GetView<PlayerCon> {
         // foregroundColor: Colors.white
         title: Text(controller.arguments.vodName ?? ""),
       ),
+
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           Obx(
             () => BetterPlayerPlaylist(
-                key: _betterPlayerPlaylistStateKey,
-                betterPlayerConfiguration: BetterPlayerConfiguration(
-                    autoPlay: true,
-                    looping: true,
-                    fit: BoxFit.scaleDown,
-                    allowedScreenSleep: false,
-                    placeholder: CachedNetworkImage(
-                        width: Get.width,
-                        fit: BoxFit.cover,
-                        imageUrl: controller.arguments.vodPic)),
+                key: controller.betterPlayerPlaylistStateKey,
+                betterPlayerConfiguration: const BetterPlayerConfiguration(
+                  fit: BoxFit.contain,
+                  autoPlay: true,
+                  looping: true,
+                  // placeholder: CachedNetworkImage(
+                  //     width: Get.width,
+                  //     fit: BoxFit.cover,
+                  //     imageUrl: controller.arguments.vodPic),
+                  allowedScreenSleep: false,
+                  autoDetectFullscreenDeviceOrientation: true,
+                  autoDetectFullscreenAspectRatio: true,
+                ),
                 betterPlayerPlaylistConfiguration:
                     const BetterPlayerPlaylistConfiguration(),
                 betterPlayerDataSourceList: controller.vodPlayUrlEntityList[
@@ -134,7 +119,7 @@ class PlayerScreen extends GetView<PlayerCon> {
                           onChanged: (int? value) {
                             controller.currentPlayFromIndex.value = value!;
 
-                            _betterPlayerPlaylistController
+                            controller.betterPlayerPlaylistController
                                 ?.setupDataSourceList(
                                     controller.vodPlayUrlEntityList[value]);
                           },
@@ -165,7 +150,7 @@ class PlayerScreen extends GetView<PlayerCon> {
                             index == controller.currentDataSourceIndex.value
                                 ? null
                                 : () {
-                                    _betterPlayerPlaylistController
+                                    controller.betterPlayerPlaylistController
                                         ?.setupDataSource(index);
                                   },
                         child: Text(e.name));
