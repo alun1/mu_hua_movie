@@ -35,4 +35,5 @@ android {
 }
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+   // implementation files('libs/SaaS_TalkingDataSDK_Android_V5.0.13.jar')
 }
