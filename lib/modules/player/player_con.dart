@@ -1,6 +1,7 @@
 import 'package:extended_betterplayer/better_player.dart';
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/model/entity/vod_info_entity.dart';
+import 'package:talkingdata_sdk_plugin/talkingdata_sdk_plugin.dart';
 
 import 'my_better_player_data_source.dart';
 
@@ -15,12 +16,19 @@ class PlayerCon extends GetxController {
 
   @override
   void onInit() {
+    TalkingDataSDK.onPageBegin("播放");
     super.onInit();
     arguments = Get.arguments;
 
     vodPlayFromList = arguments.vodPlayFrom.split('\$\$\$');
     String vodPlayUrlStr = arguments.vodPlayUrl;
     analysisUrl(vodPlayUrlStr);
+  }
+
+  @override
+  onClose(){
+    super.onClose();
+    TalkingDataSDK.onPageEnd("播放");
   }
 
   analysisUrl(String vodPlayUrlStr) {

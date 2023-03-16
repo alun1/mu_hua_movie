@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/service/my_service.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:talkingdata_sdk_plugin/talkingdata_sdk_plugin.dart';
 import '../../routes/app_routes.dart';
 import '../../utils/EsoImageCacheManager.dart';
 import 'home_con.dart';
@@ -31,12 +32,15 @@ class HomeScreen extends GetView<HomeCon> {
                 },
                 icon: const Icon(Icons.search)),
             OutlinedButton.icon(
-                onPressed: () {
-                  _scaffoldKey.currentState?.openEndDrawer();
-                },
+              onPressed: () {
+                _scaffoldKey.currentState?.openEndDrawer();
+              },
               icon: const Icon(Icons.category),
-              label: Obx(()=> Text(controller.category.value?.typeName??"全部",style: const TextStyle(fontSize: 12),)),
-              ),
+              label: Obx(() => Text(
+                    controller.category.value?.typeName ?? "全部",
+                    style: const TextStyle(fontSize: 12),
+                  )),
+            ),
           ],
         ),
         endDrawer: Drawer(
@@ -110,7 +114,12 @@ class HomeScreen extends GetView<HomeCon> {
                     size: 15,
                   ),
                   onTap: () {
-                    Share.share('复制到浏览器下载 https://ec2-3-85-234-92.compute-1.amazonaws.com/app-release.apk');
+                    Share.share(
+                            '复制到浏览器下载 https://ec2-3-85-234-92.compute-1.amazonaws.com/app-release.apk')
+                        .then((value) async {
+                      String? oaid = await TalkingDataSDK.getOAID();
+                      TalkingDataSDK.onShare(oaid ?? "", "分享");
+                    });
                   })
               // ListTile(
               //     title: const Text("订阅"),

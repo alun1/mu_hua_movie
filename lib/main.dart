@@ -7,11 +7,16 @@ import 'package:talkingdata_sdk_plugin/talkingdata_sdk_plugin.dart';
 import 'getx_bindings/my_bindings.dart';
 
 Future<void> main() async {
+
+  runApp(const MyApp());
+
+  if (Platform.isIOS) {
+    TalkingDataSDK.backgroundSessionEnabled();
+  }
   TalkingDataSDK.init(
       appID: "94AEA0CDD9F647C0BDE6F022B8D2583C",
       channelID: Platform.operatingSystem,
       custom: "");
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

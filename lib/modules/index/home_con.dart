@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/model/repository/net_repository.dart';
 import 'package:mu_hua_movie/service/my_service.dart';
+import 'package:talkingdata_sdk_plugin/talkingdata_sdk_plugin.dart';
 
 import '../../model/entity/vd_class.dart';
 import '../../model/entity/vod_info_entity.dart';
@@ -17,6 +18,8 @@ class HomeCon extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
+    TalkingDataSDK.onPageBegin("主页面");
     getCategory();
     getIndex();
 
@@ -28,6 +31,11 @@ class HomeCon extends GetxController {
     });
 
     super.onInit();
+  }
+  @override
+  onClose(){
+    super.onClose();
+    TalkingDataSDK.onPageEnd("主页面");
   }
 
   getIndex({String? url}) async {
