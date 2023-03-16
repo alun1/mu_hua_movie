@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mu_hua_movie/routes/app_page.dart';
 import 'package:talkingdata_sdk_plugin/talkingdata_sdk_plugin.dart';
@@ -9,6 +10,10 @@ import 'getx_bindings/my_bindings.dart';
 Future<void> main() async {
 
   runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
 
   if (Platform.isIOS) {
     TalkingDataSDK.backgroundSessionEnabled();
