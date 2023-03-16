@@ -12,10 +12,8 @@ import com.tendcloud.tenddata.TalkingDataSDK;
 import com.tendcloud.tenddata.TalkingDataSearch;
 import com.tendcloud.tenddata.TalkingDataShoppingCart;
 import com.tendcloud.tenddata.TalkingDataTransaction;
-
 import java.util.List;
 import java.util.Map;
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
