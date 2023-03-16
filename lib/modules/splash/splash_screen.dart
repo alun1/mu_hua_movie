@@ -13,6 +13,7 @@ class SplashScreen extends GetView<SplashCon> {
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Icon(
                 Icons.play_arrow,
