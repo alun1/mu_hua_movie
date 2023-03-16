@@ -32,7 +32,10 @@ class SplashCon extends GetxController {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     buildNumber = packageInfo.buildNumber;
     await Get.find<MyService>().initBox();
-    await updateVersion();
+    if(Platform.isAndroid){
+      await updateVersion();
+    }
+
     Get.offAndToNamed(Routes.home);
   }
 

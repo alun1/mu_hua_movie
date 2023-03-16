@@ -82,8 +82,8 @@ dev_dependencies:
 
   build_runner: ^2.3.3
 
-  talkingdata_sdk_plugin:
-    path: ./talkingdata_sdk_plugin
+#  talkingdata_sdk_plugin:
+#    path: ./talkingdata_sdk_plugin
 
 
 

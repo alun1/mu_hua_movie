@@ -12,9 +12,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 
-<!--    android:name=".MyApp"-->
+<!--    -->
     <application
         android:icon="@mipmap/ic_launcher"
+        android:name=".MyApp"
         android:label="源播">
         <activity
             android:name=".MainActivity"
