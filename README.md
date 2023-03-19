@@ -4,6 +4,6 @@
 
 ## Getting Started
 
-![RUNOOB 图标](http://static.runoob.com/images/runoob-logo.png)
+![截图1](https://github.com/alun1/mu_hua_movie/blob/master/screenshot/Screenshot_1.jpg)
 
-![RUNOOB 图标](http://static.runoob.com/images/runoob-logo.png)
+![截图2](https://github.com/alun1/mu_hua_movie/blob/master/screenshot/Screenshot_1.jpg)
