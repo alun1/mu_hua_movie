@@ -1,6 +1,6 @@
 # mu_hua_movie
 
-一个影视采集播放APP
+一个影视采集播放APP，仅做技术交流，请一定点个小星星
 
 ## Getting Started
 
