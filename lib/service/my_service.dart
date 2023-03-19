@@ -41,11 +41,11 @@ class MyService extends GetxService {
           "https://collect.wolongzyw.com/api.php/provide/vod/");
       allBox.put("selectSourceKey", "卧龙资源");
 
-      sourceBox.put("老鸭",
-          SourceEntity("老鸭", "https://api.apilyzy.com/api.php/provide/vod/"));
-      sourceBox.put("lj",
-          SourceEntity("lj", "https://caiji.semaozy.net/inc/apijson_vod.php"));
-
+      // sourceBox.put("老鸭",
+      //     SourceEntity("老鸭", "https://api.apilyzy.com/api.php/provide/vod/"));
+      // sourceBox.put("lj",
+      //     SourceEntity("lj", "https://caiji.semaozy.net/inc/apijson_vod.php"));
+      //
 
       allBox.put("isFirstRun", false);
     }
