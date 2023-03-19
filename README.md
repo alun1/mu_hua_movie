@@ -6,4 +6,4 @@
 
 ![截图1](https://github.com/alun1/mu_hua_movie/blob/master/screenshot/Screenshot_1.jpg)
 
-![截图2](https://github.com/alun1/mu_hua_movie/blob/master/screenshot/Screenshot_1.jpg)
+![截图2](https://github.com/alun1/mu_hua_movie/blob/master/screenshot/Screenshot_2.jpg)
