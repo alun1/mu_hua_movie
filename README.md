@@ -3,6 +3,8 @@
 
 安卓手机可以下载 [APK安装包](https://github.com/alun1/mu_hua_movie/releases/download/v1.0.0/app-release.apk)
 
+苹果手机自己编译咯
+
 ![截图1](https://github.com/alun1/mu_hua_movie/blob/master/screenshot/Screenshot_1.jpg)
 
 ![截图2](https://github.com/alun1/mu_hua_movie/blob/master/screenshot/Screenshot_2.jpg)
